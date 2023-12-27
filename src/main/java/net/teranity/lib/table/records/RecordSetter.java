@@ -3,15 +3,14 @@ package net.teranity.lib.table.records;
 import lombok.*;
 import net.teranity.lib.OrionTable;
 import net.teranity.lib.exceptions.RecordException;
-import net.teranity.lib.managers.RecordManager;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @RequiredArgsConstructor(staticName = "build")
-public class RecordSetter extends RecordManager {
+public class RecordSetter {
+    @NonNull @Getter private OrionTable orionTable;
     @Getter @Setter private String setRecord, parentRecord;
     @Getter @Setter private Object setObject, parentObject;
 
@@ -20,13 +19,12 @@ public class RecordSetter extends RecordManager {
     @Getter private ResultSet resultSet;
     private boolean next;
 
-    @Override
     public void setup() throws RecordException {
         checkPreviousObject();
 
         try {
             String sql = "update " + getOrionTable().getTableName() + " set " + setRecord + " = ? where " + parentRecord + " = ?";
-            PreparedStatement statement = getConnection().prepareStatement(sql);
+            PreparedStatement statement = getOrionTable().getConnection().prepareStatement(sql);
             statement.setObject(1, setObject);
             statement.setObject(2, parentObject);
             statement.executeUpdate();
@@ -41,7 +39,7 @@ public class RecordSetter extends RecordManager {
     private void checkPreviousObject() throws RecordException {
         try {
             String sql = "select " + setRecord + " from " + getOrionTable().getTableName() + " where " + parentRecord + " = ?";
-            PreparedStatement statement = getConnection().prepareStatement(sql);
+            PreparedStatement statement = getOrionTable().getConnection().prepareStatement(sql);
             statement.setObject(1, parentObject);
 
             ResultSet resultSet1 = statement.executeQuery();
@@ -53,7 +51,6 @@ public class RecordSetter extends RecordManager {
         }
     }
 
-    @Override
     public boolean next() {
         return (next != false);
     }

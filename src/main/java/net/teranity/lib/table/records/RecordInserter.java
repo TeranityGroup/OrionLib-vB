@@ -3,17 +3,15 @@ package net.teranity.lib.table.records;
 import lombok.*;
 import net.teranity.lib.OrionTable;
 import net.teranity.lib.exceptions.RecordException;
-import net.teranity.lib.managers.RecordManager;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 
 @RequiredArgsConstructor(staticName = "build")
-public class RecordInserter extends RecordManager {
+public class RecordInserter {
+    @NonNull @Getter private OrionTable orionTable;
     @Getter private ArrayList<String> records = new ArrayList<>();
     @Getter private ArrayList<Object> objects = new ArrayList<>();
 
@@ -24,7 +22,7 @@ public class RecordInserter extends RecordManager {
     @SneakyThrows(SQLException.class)
     public boolean alreadyExists() {
         String sql = "select * from " + getOrionTable().getTableName() + " where " + getRecords().get(1) + " = ?";
-        PreparedStatement statement = getConnection().prepareStatement(sql);
+        PreparedStatement statement = getOrionTable().getConnection().prepareStatement(sql);
         statement.setObject(1, getObjects().get(1));
 
         ResultSet resultSet = statement.executeQuery();
@@ -37,7 +35,6 @@ public class RecordInserter extends RecordManager {
         return (getRecords().size() == getObjects().size());
     }
 
-    @Override
     public void setup() throws RecordException {
         try {
             StringBuilder recordBuilder = new StringBuilder();
@@ -62,7 +59,7 @@ public class RecordInserter extends RecordManager {
             objectStrBuilder.deleteCharAt(length);
 
             query = "insert into " + getOrionTable().getTableName() + " (" + recordBuilder.toString() +  ") values (" + objectStrBuilder.toString() + ")";
-            PreparedStatement statement = getConnection().prepareStatement(query);
+            PreparedStatement statement = getOrionTable().getConnection().prepareStatement(query);
             for (@NonNull Object object : getObjects()) {
                 int index = getObjects().indexOf(object) + 1;
 
@@ -82,7 +79,6 @@ public class RecordInserter extends RecordManager {
         }
     }
 
-    @Override
     public boolean next() {
         return (next != false);
     }

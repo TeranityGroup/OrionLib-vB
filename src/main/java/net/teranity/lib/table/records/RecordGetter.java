@@ -5,15 +5,16 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import net.teranity.lib.OrionTable;
 import net.teranity.lib.exceptions.RecordException;
-import net.teranity.lib.managers.RecordManager;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @RequiredArgsConstructor(staticName = "build")
-public class RecordGetter extends RecordManager {
+public class RecordGetter {
+    @NonNull @Getter private OrionTable orionTable;
     @Getter private ResultSet resultSet;
 
     private boolean next;
@@ -33,7 +34,6 @@ public class RecordGetter extends RecordManager {
         } return null;
     }
 
-    @Override
     public void setup() throws RecordException {
         try {
             String sql;
@@ -44,7 +44,7 @@ public class RecordGetter extends RecordManager {
                 sql = "select " + select + " from " + getOrionTable().getTableName() + " where " + parent + " = ?";
             }
 
-            PreparedStatement statement = getConnection().prepareStatement(sql);
+            PreparedStatement statement = getOrionTable().getConnection().prepareStatement(sql);
             if (parentObject != null) {
                 statement.setObject(1, parentObject);
             }
@@ -56,7 +56,6 @@ public class RecordGetter extends RecordManager {
         }
     }
 
-    @Override
     public boolean next() {
         return (next != false);
     }
