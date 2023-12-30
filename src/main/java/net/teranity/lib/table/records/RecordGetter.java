@@ -20,8 +20,8 @@ public class RecordGetter {
     private boolean next;
 
     @Getter @Setter private String select;
-    @Getter @Setter private String parent;
-    @Getter @Setter private Object parentObject;
+    @Getter private String parent;
+    @Getter private Object parentObject;
 
     @NonNull
     public Object get() throws RecordException {
@@ -58,5 +58,10 @@ public class RecordGetter {
 
     public boolean next() {
         return (next != false);
+    }
+
+    public void setParent(String parent, Object parentObject) {
+        this.parent = parent;
+        this.parentObject = parentObject;
     }
 }

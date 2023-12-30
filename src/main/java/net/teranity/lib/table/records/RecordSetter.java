@@ -11,8 +11,8 @@ import java.sql.SQLException;
 @RequiredArgsConstructor(staticName = "build")
 public class RecordSetter {
     @NonNull @Getter private OrionTable orionTable;
-    @Getter @Setter private String setRecord, parentRecord;
-    @Getter @Setter private Object setObject, parentObject;
+    @Getter private String select, parent;
+    @Getter private Object selectObject, parentObject;
 
     @Getter private Object previousObject;
 
@@ -23,9 +23,9 @@ public class RecordSetter {
         checkPreviousObject();
 
         try {
-            String sql = "update " + getOrionTable().getTableName() + " set " + setRecord + " = ? where " + parentRecord + " = ?";
+            String sql = "update " + getOrionTable().getTableName() + " set " + select + " = ? where " + parent + " = ?";
             PreparedStatement statement = getOrionTable().getConnection().prepareStatement(sql);
-            statement.setObject(1, setObject);
+            statement.setObject(1, selectObject);
             statement.setObject(2, parentObject);
             statement.executeUpdate();
 
@@ -38,20 +38,25 @@ public class RecordSetter {
 
     private void checkPreviousObject() throws RecordException {
         try {
-            String sql = "select " + setRecord + " from " + getOrionTable().getTableName() + " where " + parentRecord + " = ?";
+            String sql = "select " + selectObject + " from " + getOrionTable().getTableName() + " where " + parent + " = ?";
             PreparedStatement statement = getOrionTable().getConnection().prepareStatement(sql);
             statement.setObject(1, parentObject);
 
             ResultSet resultSet1 = statement.executeQuery();
             while (resultSet1.next()) {
-                previousObject = resultSet1.getObject(setRecord);
+                previousObject = resultSet1.getObject(select);
             }
         }catch (SQLException e) {
-            throw new RecordException("Database server error, no record found of " + setRecord);
+            throw new RecordException("Database server error, no record found of " + select);
         }
     }
 
     public boolean next() {
         return (next != false);
+    }
+
+    public void setSelect(String select, Object selectObject) {
+        this.select = select;
+        this.selectObject = selectObject;
     }
 }
