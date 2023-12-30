@@ -59,4 +59,9 @@ public class RecordSetter {
         this.select = select;
         this.selectObject = selectObject;
     }
+
+    public void setParent(String parent, Object parentObject) {
+        this.parent = parent;
+        this.parentObject = parentObject;
+    }
 }
