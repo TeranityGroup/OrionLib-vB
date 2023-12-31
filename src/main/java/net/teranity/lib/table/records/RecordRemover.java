@@ -17,17 +17,32 @@ public class RecordRemover {
     @Getter private String parent;
     @Getter private Object parentObject;
 
+    @Getter private String secondParent;
+    @Getter private String secondParentObject;
+
     @Getter private ResultSet resultSet;
 
     private boolean next;
 
     public void setup() throws RecordException {
         try {
-            String sql = "";
-            PreparedStatement statement = orionTable.getConnection().prepareStatement("delete from " + orionTable.getTableName() + " where " + parent + " = ?");
-            statement.setObject(1, parentObject);
+            String sql;
+            PreparedStatement statement;
+
+            if (secondParent == null) {
+                sql = "delete from " + orionTable.getTableName() + " where " + parent + " = ?";
+                statement = orionTable.getConnection().prepareStatement(sql);
+                statement.setObject(1, parentObject);
+            }else {
+                sql = "delete from " + orionTable.getTableName() + " where " + secondParent + " = ? and " + parent + " = ?";
+                statement = orionTable.getConnection().prepareStatement(sql);
+                statement.setObject(1, secondParentObject);
+                statement.setObject(2, parentObject);
+            }
+
             statement.executeUpdate();
 
+            resultSet = statement.executeQuery();
             next = true;
         }catch (SQLException e) {
             throw new RecordException("");

@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84e6b156-302e-42d5-ac05-ef36bcf39db4" name="Changes" comment="Change void setter and getter." />
+    <list default="true" id="84e6b156-302e-42d5-ac05-ef36bcf39db4" name="Changes" comment="Add RecordRemover.java" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,8 +13,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -86,6 +86,7 @@
       <workItem from="1703685047415" duration="9000" />
       <workItem from="1703930156310" duration="425000" />
       <workItem from="1703933754408" duration="56000" />
+      <workItem from="1704016823147" duration="351000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -127,7 +128,15 @@
       <option name="project" value="LOCAL" />
       <updated>1703933796388</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Add RecordRemover.java">
+      <option name="closed" value="true" />
+      <created>1704017161349</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1704017161352</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -136,6 +145,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial Commit" />
     <MESSAGE value="Change void setter and getter." />
-    <option name="LAST_COMMIT_MESSAGE" value="Change void setter and getter." />
+    <MESSAGE value="Add RecordRemover.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add RecordRemover.java" />
   </component>
 </project>

@@ -82,4 +82,16 @@ public class RecordInserter {
     public boolean next() {
         return (next != false);
     }
+
+    public void addRecord(String... records) {
+        for (String record : records) {
+            getRecords().add(record);
+        }
+    }
+
+    public void addObject(Object... objects) {
+        for (Object object : objects) {
+            getObjects().add(object);
+        }
+    }
 }
