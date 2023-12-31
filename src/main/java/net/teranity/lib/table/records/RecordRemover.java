@@ -18,7 +18,7 @@ public class RecordRemover {
     @Getter private Object parentObject;
 
     @Getter private String secondParent;
-    @Getter private String secondParentObject;
+    @Getter private Object secondParentObject;
 
     @Getter private ResultSet resultSet;
 
@@ -52,6 +52,11 @@ public class RecordRemover {
     public void setParent(String parent, Object parentObject) {
         this.parent = parent;
         this.parentObject = parentObject;
+    }
+
+    public void setSecondParent(String secondParent, Object secondParentObject) {
+        this.secondParent = secondParent;
+        this.secondParentObject = secondParentObject;
     }
 
     public boolean next() {
